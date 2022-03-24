@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+        <script src="./components/rotation.js"></script>
+        <script src="./components/fish.js"></script>
+        <script src="./components/coins.js"></script>
+        <script src="./components/game-play.js"></script>
+    </head>
+    <body>
+        <a-scene background="color:#026f90">
+            <a-a-assets timeout="10000">
+                <a-asset-item id="islandMap" src="assets/island/scene.gltf"></a-asset-item>
+                <a-asset-item id="diver_model" src="assets/scuba_diver/scene.gltf"></a-asset-item>
+                <a-asset-item id="fish_model" src="./assets/fish/scene.gltf"></a-asset-item>
+                <a-asset-item id="treasure_model" src="./assets/treasure/model.gltf"></a-asset-item>
+                <a-asset-item id="turtle_model" src="./assets/turtle/scene.gltf"></a-asset-item>
+             
+            </a-a-assets>
+    
+            <!-- Sky -->
+            <a-sky
+            geometry="primitive: sphere;"
+            material="shader: gradient; bottomColor: #00009e; topColor:109 205 227;offset: 0.0001;"
+            radius="100"
+            theta-length="180"
+            side="double"
+            animation="property: rotation; to: 0 300 0; easing:linear; loop: true; dur: 500000"
+            >
+
+            <!--Island-->
+            <a-entity id="island" gltf-model="#islandMap" position="0 -15 -40" scale="1.7 1.7 1.5"></a-entity>
+            
+            <!--Treasure-->
+            <a-entity id="treasure1" gltf-model="#treasure_model" position="-8 -5 0" rotation="0 45 0" scale="8 8 8"></a-entity>
+            <a-entity id="treasure2" gltf-model="#treasure_model" position="-4 -5 0" rotation="0 45 0" scale="8 8 8"></a-entity>
+            <a-entity id="treasure3" gltf-model="#treasure_model" position="0 -5 0" rotation="0 45 0" scale="8 8 8"></a-entity>
+
+            <!--Fish Entity-->
+            <a-entity position="0 0 0" id="fishModels" fish> </a-entity>
+
+            <!--Treasure Entity-->
+            <a-entity position="0 0 0" id="treasureCoins" coins> </a-entity>
+
+            <!--Turtle-->
+            <a-entity id="turtle" gltf-model="#turtle_model" position="10 0 20" rotation="0 90 0" scale="0.005 0.005 0.005"></a-entity>
+
+           </a-sky>
+
+            <!--Scuba Diver-->
+            <a-entity id="scubaDiver" gltf-model="#diver_model" position="0 7 -1" rotation="0 180 0" scale="0.1 0.1 0.1" diver-rotation-reader dynamic-body="mass:0" game-play>
+                <a-sphere
+                id="bubble1"
+                position="52.9829 119.97737 -49.38121"
+                radius="1"
+                color="#b2ebf2"
+                animation="property: position; to: 52.9829 300 -49.38121;easing:linear; loop: true; dur: 2000"
+                ></a-sphere>
+            </a-entity>
+
+            <a-cylinder color="#00009e" radius="100" opacity="0.2"></a-cylinder>
+            
+            <!-- CAMERA -->
+                <a-entity
+                camera="active: true"
+                look-controls
+                position="0 10 25"
+                ></a-entity>
+
+            <!--Game Timer and Position-->
+            <a-entity id="header" position="1 -4 0">
+                <!--Title-->
+                <a-entity position="-8 28.5 0" 
+                text="font:exo2bold; align:centre; width:70; color:black; value:VR Scuba Dive"></a-entity>
+
+                <!--Timer-->
+                <a-entity position="-23.5 19.3 0">
+                    <a-entity position="-9 5 0" 
+                    text="font:aileronsemibold; width:18; color:black; value:TIME\nREMAINING"></a-entity>
+                    <a-entity id="timer" position="-11 5 0"
+                    text="font:exo2bold; align:center; width:30; color:black; value:00:00"></a-entity>
+                </a-entity>
+
+                <!--Target Status-->
+                <a-entity position="-18 19.3 0">
+                    <a-entity position="-9 5 0" 
+                    text="font:exo2bold; align:center; width:18; color:black; value:COINS\nREMAINING"></a-entity>
+
+                    <a-entity id="targets" position="-6 5 0"
+                    text="font:exo2bold; align:center; width:30; color:black; value:10"></a-entity>
+                </a-entity>
+
+                <!--Score-->
+                <a-entity position="30.5 26.5 0">
+                    <a-entity text="font:exo2bold; align:center; width:40; color:black; value:SCORE"></a-entity>
+                    <a-entity id="score" position="0 -2 0"
+                    text="font:exo2bold; align:center; width:40; color:black; value:0"></a-entity>
+                </a-entity>
+
+                <!--Game Over-->
+                <a-entity id="game_over_text" position="0 7.5 0"
+                text="font:exo2bold; align:center; width:100; color:black; value:GAME OVER!!!"
+                visible="false"></a-entity>
+
+                <!--Game Won-->
+                <a-entity id="game_won_text" position="0 7.5 0"
+                text="font:exo2bold; align:center; width:100; color:black; value:YOU WIN!!!"
+                visible="false"></a-entity>
+                </a-entity>
+            </a-entity>
+                
+        </a-scene>
+    </body>
+</html>
